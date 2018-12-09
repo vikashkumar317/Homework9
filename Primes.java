@@ -14,14 +14,35 @@ public class Primes
 
     public static void main(String args[])
     {
-
+    	ListInterface<Integer> candidates = null;
+    	ListInterface<Integer> primes = new AList<Integer>();
+    	ListInterface<Integer> composites = new AList<Integer>();
         int max;
         
         System.out.println("Please enter the maximum value to test for primality");
         max = getInt("   It should be an integer value greater than or equal to 2.");
         
         // COMPLETE THE MAIN
+        candidates=new AList<Integer>(max);
+        for(int i=0;i<max-1;i++)
+        {
+        	candidates.add(i+2);
+        }
         
+        System.out.println("The candidates list is " + candidates);
+        int i=1,count=1;
+        while(!candidates.isEmpty())
+        {
+        	System.out.println("\nAfter "+count+ " round :");
+        	primes.add(candidates.getEntry(i));
+        	int prime=candidates.getEntry(i);
+        	 candidates.remove(i);
+        	 getComposites(candidates, composites,prime );
+        	 System.out.println("candidates list :"+candidates);
+        	 System.out.println("primes list :" + primes);
+        	 System.out.println("composite list :"+composites);
+        	 count++;
+        }
     }
     
     
@@ -35,7 +56,18 @@ public class Primes
      */
     public static void getComposites(ListInterface<Integer> candidates, ListInterface<Integer> composites, Integer prime)
     {
-        // COMPLETE THIS METHOD
+       int length=candidates.getLength();
+       
+       for(int i=1;i<=length;i++)
+       {
+    	   if(candidates.getEntry(i) % prime==0)
+    	   {
+    		   composites.add(candidates.getEntry(i));
+    		   candidates.remove(i);
+    		   i--;
+    	   }
+    	   length=candidates.getLength();
+       }
     }
     
     
